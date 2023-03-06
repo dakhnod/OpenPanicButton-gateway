@@ -35,7 +35,7 @@ The id is only needed for chain testing mode.
 The protocol is fairly simple. The button, when pressed, needs to broadcast a packet with specific manufacturer specific data:
 
 index start | index end | function
-----------------------------------
+|-| - | ------------------------------
 0 | 3 | key, as described in config.json
 4 | 4 | target id (only relevant for test chain mode)
 5 | 5 | mode
