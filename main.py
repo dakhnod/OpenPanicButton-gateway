@@ -32,6 +32,12 @@ MODE_TEST_SILENT = 0x02
 
 REBOOT_PERIOD = 2 * 60 * 1000
 
+WATCHDOG_TIMEOUT = REBOOT_PERIOD + ((ADV_PERIOD + ADV_PAUSE) * 1000)
+
+# safety reboot, should never trigger
+wdt = machine.WDT(timeout=WATCHDOG_TIMEOUT)
+wdt.feed()
+
 led = machine.Pin(2)
 led.init(led.OUT)
 led.off()
