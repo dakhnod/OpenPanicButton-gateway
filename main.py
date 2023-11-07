@@ -30,6 +30,8 @@ MODE_ALERT = 0x00
 MODE_ALERT_SHORT = 0x01
 MODE_TEST_SILENT = 0x02
 
+REBOOT_PERIOD = 2 * 60 * 1000
+
 led = machine.Pin(2)
 led.init(led.OUT)
 led.off()
@@ -49,7 +51,7 @@ blink = True
 def reboot_timeout(timer):
     machine.reset()
 
-reboot_timer.init(period=86400000, mode=reboot_timer.ONE_SHOT, callback=reboot_timeout)
+reboot_timer.init(period=REBOOT_PERIOD, mode=reboot_timer.ONE_SHOT, callback=reboot_timeout)
 
 def adv_data_decode(data):
     index = 0
@@ -73,6 +75,9 @@ def key_found(data):
             print('id mismatch')
             return # not for us
         data[4] += 1
+        global ADV_PERIOD, ADV_PAUSE
+        ADV_PERIOD = 30
+        ADV_PAUSE = 10
 
     led.on()
     reboot_timer.deinit() # going to reboot anyway
